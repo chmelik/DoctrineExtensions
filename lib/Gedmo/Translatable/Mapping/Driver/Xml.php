@@ -53,6 +53,10 @@ class Xml extends BaseXml
 
         if (property_exists($meta, 'embeddedClasses') && $meta->embeddedClasses) {
             foreach ($meta->embeddedClasses as $propertyName => $embeddedClassInfo) {
+                if (!in_array($embeddedClassInfo['class'], $this->_originalDriver->getAllClassNames(), true)) {
+                    continue;
+                }
+
                 $xmlEmbeddedClass = $this->_getMapping($embeddedClassInfo['class']);
                 $this->inspectElementsForTranslatableFields($xmlEmbeddedClass, $config, $propertyName);
             }
